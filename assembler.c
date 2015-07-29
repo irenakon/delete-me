@@ -477,7 +477,7 @@ void handle_dollar_sign(char * line) {
     }
   }
 
-  if found {
+  if (found == true) {
     if (last[0] == '\0') {
       printf("you gave me $$ and I don't know how to replace it...");
       exit(1);
