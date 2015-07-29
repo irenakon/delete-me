@@ -463,6 +463,51 @@ void assembler_second_loop(char *line, FILE *obj_file, int *ic)
 	*ic += opcode_size;
 }
 
+void handle_dollar_sign(char * line) {
+  int i,z,j,room,lastSpace=-1;
+  bool found = false ;
+  static char last[20] = {'\0'};
+
+  if (line[0] == '.' || line[0] == '\0') return;
+  
+  for (i = 0; i < strlen(line);i++) {
+    if (line[i] == '$' && line[i+1] == '$') {
+      found = true;
+      break;
+    }
+  }
+
+  if found {
+    if (last[0] == '\0') {
+      printf("you gave me $$ and I don't know how to replace it...");
+      exit(1);
+    }
+    
+    room = strlen(last) - 2;
+    
+    for(i = strlen(line); i > 0; i--) {
+      if (line[i] == '$') {
+        for (z = 0,j = i-1; j < strlen(last); j++,z++)
+          line[j] = last[z];
+      } else {
+        line[i+room] = line[i];
+      }
+      
+    }
+    
+  } else {
+    for (i = 0; i < strlen(line);i++) {
+      if (line[i] == ' ') {
+        lastSpace = i;
+      } else if (line[i] == ','){
+        for (j=0,z=lastSpace+1; z < (lastSpace  +(i - lastSpace - 1)); z++,j++ )
+          last[j] = line[z];
+        last[j] = '\0';
+      }
+    }
+  }
+}
+
 //full proccess a code file, this is the assembler's "main" function
 void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, FILE *ext_file)
 {
@@ -481,6 +526,8 @@ void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, 
 
 	/* First loop */
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, code_file)) {
+    printf("-> %s\n",trim_white_spaces(line));
+    handle_dollar_sign(trim_white_spaces(line));
     printf("-> %s\n",trim_white_spaces(line));
 		assembler_first_loop(line, &ic, &dc);
 	}
