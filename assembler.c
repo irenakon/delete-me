@@ -466,7 +466,7 @@ void assembler_second_loop(char *line, FILE *obj_file, int *ic)
 void handle_dollar_sign(char * line) {
   int i,z,j,room,lastSpace=-1;
   bool found = false ;
-  static char last[20] = {'\0'};
+  static char last[20] = "zevel";
 
   if (line[0] == '.' || line[0] == '\0') return;
   
@@ -485,7 +485,7 @@ void handle_dollar_sign(char * line) {
     
     room = strlen(last) - 2;
     
-    for(i = strlen(line); i > 0; i--) {
+    for(i = strlen(line); i >= 0; i--) {
       if (line[i] == '$') {
         for (z = 0,j = i-1; z < strlen(last); j++,z++)
           line[j] = last[z];
@@ -502,8 +502,8 @@ void handle_dollar_sign(char * line) {
         lastSpace = i;
       } else if (line[i] == ','){
         for (j=0,z=lastSpace+1; z < (lastSpace  +(i - lastSpace - 1)); z++,j++ )
-          last[j] = line[z];
-        last[j] = '\0';
+          //last[j] = line[z];
+        //last[j] = '\0';
       }
     }
   }
