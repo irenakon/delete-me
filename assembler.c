@@ -501,7 +501,7 @@ void handle_dollar_sign(char * line) {
       if (line[i] == ' ') {
         lastSpace = i;
       } else if (line[i] == ','){
-        for (j=0,z=lastSpace+1; z < (lastSpace  +(i - lastSpace - 1)); z++,j++ )
+        //for (j=0,z=lastSpace+1; z < (lastSpace  +(i - lastSpace - 1)); z++,j++ )
           //last[j] = line[z];
         //last[j] = '\0';
       }
