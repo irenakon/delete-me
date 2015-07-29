@@ -12,19 +12,19 @@
 #include "registers.h"
 
 command_addressing command_valid_addressing[COMMANDS_AMOUNT][2][4] = {
-	{{IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, } },
-	{{IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER, }, {IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER, }},
-	{{IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
-	{{IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
+	{{IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, } },
+	{{IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER, }, {IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER, }},
+	{{IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
+	{{IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
 	{{INVALID, }, {DIRECT, DIRECT_REGISTER, INVALID,}},
 	{{INVALID, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
 	{{DIRECT, INVALID, },{DIRECT, DIRECT_REGISTER, INVALID, }},
 	{{INVALID, }, {DIRECT, DIRECT_REGISTER, INVALID,}},
 	{{INVALID, }, {DIRECT, DIRECT_REGISTER, INVALID, }},
-	{{INVALID, }, {DIRECT, DISTENCE, DIRECT_REGISTER, INVALID, }},
-	{{INVALID, }, {DIRECT, DISTENCE, DIRECT_REGISTER, INVALID, }},
-	{{INVALID, }, {DIRECT, DISTENCE, DIRECT_REGISTER, INVALID, }},
-	{{INVALID, }, {IMMEDIATE, DIRECT, DISTENCE, DIRECT_REGISTER}},
+	{{INVALID, }, {DIRECT, LAST, DIRECT_REGISTER, INVALID, }},
+	{{INVALID, }, {DIRECT, LAST, DIRECT_REGISTER, INVALID, }},
+	{{INVALID, }, {DIRECT, LAST, DIRECT_REGISTER, INVALID, }},
+	{{INVALID, }, {IMMEDIATE, DIRECT, LAST, DIRECT_REGISTER}},
 	{{INVALID, }, {DIRECT, INVALID, }},
 	{{INVALID, }, {INVALID, }},
 	{{INVALID, }, {INVALID, }},
@@ -160,7 +160,7 @@ bool commands_is_valid_addressing_syntax(char *line, command_addressing addressi
 		}
 
 		return true;
-	case DISTENCE:
+	case LAST:
 		if(('~' != tmpline[0]) || '(' != tmpline[1]) {
 			printf("should start with '~(': %s\n", line);
 			return false;
@@ -255,7 +255,7 @@ command_addressing commands_get_one_addressing(char *line) {
 	}
 
 	if(('~' == line[0]) && commands_check_distance_valid(line+1)) {
-		return DISTENCE;
+		return LAST;
 	}
 
 	if(assembler_is_valid_symbol(line)) {
@@ -388,7 +388,7 @@ bool commands_get_one_argument(char *line, command_addressing addressing, int *d
 		case DIRECT:
 			line = trim_white_spaces(line);
 	 		return (assembler_get_symbol_value(line, data, ic));
-		case DISTENCE:
+		case LAST:
 			for(i = 0; i < strlen(templine); i++) {
 				if(',' == templine[i]) {
 					templine[i] = '\0';

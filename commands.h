@@ -10,7 +10,7 @@ char *commands[COMMANDS_AMOUNT];
 typedef enum {
 	IMMEDIATE=0,
 	DIRECT=1,
-	DISTENCE=2,
+	LAST=2,
 	DIRECT_REGISTER=3,
 	INVALID,
 } command_addressing;
