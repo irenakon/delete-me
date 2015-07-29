@@ -500,7 +500,7 @@ void handle_dollar_sign(char * line) {
     for (i = 0; i < strlen(line);i++) {
       if (line[i] == ' ') {
         lastSpace = i;
-      } else if (line[i] == ','){
+      } else if (line[i] == ',' || line[i] == '\0'){
 	y = (lastSpace  +(i - lastSpace - 1)) - lastSpace;
         for (j=0,z=lastSpace+1; j < y; z++,j++ ) {
           last[j] = line[z];
