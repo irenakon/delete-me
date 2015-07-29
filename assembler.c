@@ -487,8 +487,9 @@ void handle_dollar_sign(char * line) {
     
     for(i = strlen(line); i > 0; i--) {
       if (line[i] == '$') {
-        for (z = 0,j = i-1; j < strlen(last); j++,z++)
+        for (z = 0,j = i-1; z < strlen(last); j++,z++)
           line[j] = last[z];
+        return;
       } else {
         line[i+room] = line[i];
       }
