@@ -343,7 +343,12 @@ bool commands_is_valid_addressing(int command, char *line) {
 	switch(commands_get_arguments_type(command)) {
 		case TWO:
 			commands_get_two_addressings(line, addressings);
-			return commands_check_two_addressings(command, addressings);
+      if (!commands_check_two_addressings(command, addressings)) {
+        printf("bad addressing %s\n",line);
+        return false;
+      } else {
+        return true;
+      }
 		case ONE:
 			addressing = commands_get_one_addressing(line);	
 			return commands_check_one_addressing(command, addressing);
