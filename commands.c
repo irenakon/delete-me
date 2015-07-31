@@ -381,6 +381,7 @@ bool commands_get_one_argument(char *line, command_addressing addressing, int *d
 	int i = 0;
 	line = trim_white_spaces(line);
 	strncpy(templine, line, strnlen(line, ASSEMBLER_LINE_SIZE));
+  printf("addressing: %d",addressing);
 	switch(addressing) {
 		case IMMEDIATE:
 			*data = atoi(line + 1);
