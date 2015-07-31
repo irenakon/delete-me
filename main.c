@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
       if (rindex(argv[i],'.') == NULL)
         sprintf(temp,"%s.as",argv[i]);
        else
-        temp = argv;
+        temp = argv[i];
       
 			code_file = preprocess(temp);
 			memccpy(temp, argv[i], '.', 100);
