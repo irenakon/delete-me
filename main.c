@@ -16,6 +16,12 @@ FILE * preprocess(char * filename) {
   char tmp[ASSEMBLER_LINE_SIZE];
   
   reader = fopen(filename, "r");
+  
+  if (reader == NULL) {
+    printf("Can't find file: %s\n",filename);
+    exit(1);
+  }
+  
   writer = fopen("/tmp/temp.as","w+");
   
   while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
@@ -56,11 +62,9 @@ int main(int argc, char *argv[])
 			entry_file = fopen(temp, "w");
 			strcpy(temp+len, ".ext");
 			ext_file = fopen(temp, "w");
-			if (NULL == code_file
-					|| NULL == obj_file
-					|| NULL == entry_file) {
+      
+			if ( NULL == obj_file || NULL == entry_file) 
 				printf("Unable to open file.\n");
-			}
 			else {
 				assembler_init();
 				assembler_proccess_file(code_file, obj_file, entry_file, ext_file);
