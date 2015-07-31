@@ -72,6 +72,7 @@ FILE * preprocess(char * filename) {
   writer = fopen("/tmp/shit.as","w+");
   
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
+    trim_white_spaces(line);
     change_dollar_sign(line);
     fputs(line,writer);
   }
