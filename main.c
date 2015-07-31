@@ -38,12 +38,9 @@ void change_dollar_sign(char * line) {
         for (z = 0,j = i-1; z < strlen(last); j++,z++)
           line[j] = last[z];
         return;
-      } else {
-        line[i+room] = line[i];
-      }
-      
+      } else
+        line[i+room] = line[i];  
     }
-    
   } else {
     for (i = 0; i < strlen(line);i++) {
       if (line[i] == '.') return;
@@ -52,9 +49,8 @@ void change_dollar_sign(char * line) {
       } else if (line[i] == ',' || i == strlen(line)-1){
         y = (i - lastSpace - 1);
         if (strlen(line)-1==i) y++;
-        for (j=0,z=lastSpace+1; j < y; z++,j++ ) {
+        for (j=0,z=lastSpace+1; j < y; z++,j++ )
           last[j] = line[z];
-        }
         last[j] = '\0';
         return;
       }
