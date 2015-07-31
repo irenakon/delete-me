@@ -16,13 +16,12 @@ FILE * preprocess(char * filename) {
   char tmp[ASSEMBLER_LINE_SIZE];
   
   reader = fopen(filename, "r");
+  writer = fopen("/tmp/temp.as","w+");
   
   if (reader == NULL) {
     printf("Can't find file: %s\n",filename);
     exit(1);
   }
-  
-  writer = fopen("/tmp/temp.as","w+");
   
   while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     trim_white_spaces(line);
@@ -53,7 +52,12 @@ int main(int argc, char *argv[])
 		printf("Usage: %s file\n", argv[0]);
 	else {
 		for(i = 1; i < argc; i++) {
-			code_file = preprocess(argv[i]);
+      if (rindex(argv[i],'.') == NULL)
+        sprintf(temp,"%s.as",argv[i]);
+       else
+        temp = argv;
+      
+			code_file = preprocess(temp);
 			memccpy(temp, argv[i], '.', 100);
 			len =  strlen(temp) - 1;
 			strcpy(temp+len, ".ob");

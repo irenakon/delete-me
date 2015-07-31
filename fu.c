@@ -1,8 +1,8 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
-  int ic = 14;
-  int current_data = 9;
-  printf("%X %03X\n", ic, current_data & 0xFFF);
-  return 0;
+  char a[100]="zevelfff";
+  index("zevel",'l');
+  printf("%s\n",);
 }
