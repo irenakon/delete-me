@@ -532,7 +532,8 @@ void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, 
 
 	/* First loop */
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, code_file)) {
-		assembler_first_loop(handle_dollar_sign(trim_white_spaces(line)), &ic, &dc);
+    handle_dollar_sign(trim_white_spaces(line));
+		assembler_first_loop(line, &ic, &dc);
 	}
 
 	if (!should_compile) {
