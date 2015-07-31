@@ -11,7 +11,7 @@
 
 #include "assembler.h"
 
-void handle_dollar_sign(char * line) {
+void change_dollar_sign(char * line) {
   int i,z,j,y,room,lastSpace=-1;
   bool found = false ;
   static char last[20];
@@ -72,7 +72,7 @@ FILE * preprocess(char * filename) {
   writer = fopen("/tmp/shit.as","w+");
   
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
-    handle_dollar_sign(line);
+    change_dollar_sign(line);
     fputs(line,reader);
   }
   
