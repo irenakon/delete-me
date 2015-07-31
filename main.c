@@ -52,13 +52,8 @@ int main(int argc, char *argv[])
 		printf("Usage: %s file\n", argv[0]);
 	else {
 		for(i = 1; i < argc; i++) {
-      if (rindex(argv[i],'.') == NULL)
-        sprintf(temp,"%s.as",argv[i]);
-       else
-        sprintf(temp,"%s",argv[i]);
-      
-			code_file = preprocess(temp);
-			memccpy(temp, temp, '.', 100);
+			code_file = preprocess(argv[i]);
+			memccpy(temp, argv[i], '.', 100);
 			len =  strlen(temp) - 1;
 			strcpy(temp+len, ".ob");
 			obj_file = fopen(temp, "w");
