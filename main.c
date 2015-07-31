@@ -67,6 +67,7 @@ FILE * preprocess(char * filename) {
   FILE *writer = NULL;
   FILE *reader = NULL;
   char line[ASSEMBLER_LINE_SIZE];
+  char tmp[ASSEMBLER_LINE_SIZE];
   
   reader = fopen(filename, "r");
   writer = fopen("/tmp/shit.as","w+");
@@ -74,7 +75,8 @@ FILE * preprocess(char * filename) {
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     trim_white_spaces(line);
     change_dollar_sign(line);
-    fputs(line,writer);
+    sprintf(tmp,"%s\n",line);
+    fputs(tmp,writer);
   }
   
   fclose(reader);
