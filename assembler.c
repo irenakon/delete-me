@@ -498,10 +498,10 @@ void handle_dollar_sign(char * line) {
     
   } else {
     for (i = 0; i < strlen(line);i++) {
-      if (line[i] == ' ') {
+      if (line[i] == ' ' && line[i+1] !=' ') {
         lastSpace = i;
       } else if (line[i] == ',' || line[i] == '\0'){
-	y = (lastSpace  +(i - lastSpace - 1)) - lastSpace;
+	      y = (lastSpace  +(i - lastSpace - 1)) - lastSpace;
         for (j=0,z=lastSpace+1; j < y; z++,j++ ) {
           last[j] = line[z];
         }
