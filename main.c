@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         sprintf(temp,"%s",argv[i]);
       
 			code_file = preprocess(temp);
-			memccpy(temp, argv[i], '.', 100);
+			memccpy(temp, temp, '.', 100);
 			len =  strlen(temp) - 1;
 			strcpy(temp+len, ".ob");
 			obj_file = fopen(temp, "w");
