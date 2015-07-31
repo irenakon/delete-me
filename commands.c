@@ -249,11 +249,7 @@ void commands_get_two_addressings(char *line, command_addressing *addressings)
 	char *second = NULL;
 
 	strncpy(tmpline, line, ASSEMBLER_LINE_SIZE);
-	if('~' == line[0]) {
-		token = strtok(tmpline, ")");
-	} else {
-		token = strtok(tmpline, ",");
-	}
+	token = strtok(tmpline, ",");
 	second = strtok(NULL, ",");
 	token = trim_white_spaces(token);
 	second = trim_white_spaces(second);
@@ -357,11 +353,7 @@ bool commands_get_two_arguments(char *line, command_addressing *addressings, int
 	char *second = NULL;
 
 	strncpy(tmpline, line, ASSEMBLER_LINE_SIZE);
-	if('~' == line[0]) {
-		token = strtok(tmpline, ")");
-	} else {
-		token = strtok(tmpline, ",");
-	}
+  token = strtok(tmpline, ",");
 	second = strtok(NULL, ",");
 
 	if(!commands_get_one_argument(token, addressings[0], &(arguments[0]), ic+1)) {
