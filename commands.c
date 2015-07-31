@@ -160,45 +160,6 @@ bool commands_is_valid_addressing_syntax(char *line, command_addressing addressi
 		}
 
 		return true;
-	case LAST:
-		if(('~' != tmpline[0]) || '(' != tmpline[1]) {
-			printf("should start with '~(': %s\n", line);
-			return false;
-		}
-		
-		token = strtok(tmpline+2, ",");
-		token = trim_white_spaces(token);
-
-		if(!assembler_is_valid_symbol(token)) {
-			printf("Shoud be a symbol in: %s\n", line);
-			return false;
-		}
-
-
-		token = strtok(NULL, ")");
-		token = trim_white_spaces(token);
-
-		if(!assembler_is_valid_symbol(token)) {
-			printf("Shoud be a symbol in: %s\n", line);
-			return false;
-		}
-
-		token = strtok(NULL, "");
-		token = trim_white_spaces(token);
-		if(',' != token[0]) {
-			printf("invalid data after )\n");
-			return false;
-		}
-
-		token = trim_white_spaces(token+1);
-
-		if(!(registers_is_valid_register(token) || assembler_is_valid_symbol(token))) {
-			printf("should be a register or symbol: %s\n", line);
-			return false;
-		}
-
-		return true;
-
 	case DIRECT_REGISTER:
 		token = strtok(tmpline, ",");
 		token = trim_white_spaces(token);
@@ -252,10 +213,6 @@ bool commands_check_distance_valid(char *line) {
 command_addressing commands_get_one_addressing(char *line) {
 	if(('#' == line[0]) && utils_is_number(line+1)) {
 		return IMMEDIATE;
-	}
-
-	if(('~' == line[0]) && commands_check_distance_valid(line+1)) {
-		return LAST;
 	}
 
 	if(assembler_is_valid_symbol(line)) {
@@ -388,50 +345,6 @@ bool commands_get_one_argument(char *line, command_addressing addressing, int *d
 		case DIRECT:
 			line = trim_white_spaces(line);
 	 		return (assembler_get_symbol_value(line, data, ic));
-		case LAST:
-			for(i = 0; i < strlen(templine); i++) {
-				if(',' == templine[i]) {
-					templine[i] = '\0';
-					second = templine+i+1;
-					break;
-				}
-			}
-			second=trim_white_spaces(second);
-			if(!assembler_get_symbol_value(templine+2, &first_label_value, ic)) {
-				return false;
-			}
-			if(!assembler_get_symbol_value(second, &second_label_value, ic)) {
-				return false;
-			}
-
-
-			labels_distence = first_label_value - second_label_value;
-			if(labels_distence < 0) { labels_distence *= -1;}
-
-			first_label_ic_distence = ic - first_label_value;
-			if(first_label_ic_distence < 0) { first_label_ic_distence *= -1; }
-
-			second_label_ic_distence = ic - second_label_value;
-			if(second_label_ic_distence < 0) {second_label_ic_distence *= -1;}
-
-
-
-			if(labels_distence > first_label_ic_distence) {
-				*data = labels_distence;
-			}
-			else {
-				*data = first_label_ic_distence;
-				*data += 1; //ic - label offset
-			}
-
-			if(*data < second_label_ic_distence) {
-				*data = second_label_ic_distence;
-				*data += 1; //ic - label offset
-			}
-		
-			*data = *data << 2;
-				
-			return true;
 		case DIRECT_REGISTER:
 			*data = registers_get_register_value(trim_white_spaces(line)) << 2;
 			return true;
