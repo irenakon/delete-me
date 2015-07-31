@@ -63,7 +63,7 @@ FILE * preprocess(char * filename) {
   char tmp[ASSEMBLER_LINE_SIZE];
   
   reader = fopen(filename, "r");
-  writer = fopen("/tmp/shit.as","w+");
+  writer = fopen("/tmp/temp.as","w+");
   
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     trim_white_spaces(line);
@@ -94,7 +94,6 @@ int main(int argc, char *argv[])
 		printf("Usage: %s file\n", argv[0]);
 	else {
 		for(i = 1; i < argc; i++) {
-			//code_file = fopen(argv[i], "r");
 			code_file = preprocess(argv[i]);
 			memccpy(temp, argv[i], '.', 100);
 			len =  strlen(temp) - 1;
