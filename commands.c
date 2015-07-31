@@ -369,6 +369,7 @@ bool commands_is_valid_addressing(int command, char *line) {
 //gets an argument from a line
 bool commands_get_one_argument(char *line, command_addressing addressing, int *data, int ic)
 {
+  puts("a");
 	int first_label_value;
 	int second_label_value;
 
@@ -398,9 +399,11 @@ bool commands_get_one_argument(char *line, command_addressing addressing, int *d
 			}
 			second=trim_white_spaces(second);
 			if(!assembler_get_symbol_value(templine+2, &first_label_value, ic)) {
+          puts("b");
 				return false;
 			}
 			if(!assembler_get_symbol_value(second, &second_label_value, ic)) {
+          puts("c");
 				return false;
 			}
 
@@ -436,6 +439,7 @@ bool commands_get_one_argument(char *line, command_addressing addressing, int *d
 			*data = registers_get_register_value(trim_white_spaces(line)) << 2;
 			return true;
 	}
+    puts("z");
 	return false;
 }
 
