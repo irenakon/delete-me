@@ -65,7 +65,7 @@ FILE * preprocess(char * filename) {
   reader = fopen(filename, "r");
   writer = fopen("/tmp/temp.as","w+");
   
-	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
+  while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     trim_white_spaces(line);
     change_dollar_sign(line);
     sprintf(tmp,"%s\n",line);
