@@ -62,7 +62,7 @@ void handle_dollar_sign(char * line) {
 }
 
 // preprocess the file, remove dollar signs
-File * preprocess(char * filename) {
+FILE * preprocess(char * filename) {
   FILE *writer = NULL;
   FILE *reader = NULL;
   char line[ASSEMBLER_LINE_SIZE];
