@@ -8,53 +8,6 @@
 
 #include "assembler.h"
 
-void change_dollar_sign(char * line) {
-  int i,z,j,y,room,lastSpace=-1;
-  bool found = false ;
-  static char last[20];
-
-  if (line[0] == '.' || line[0] == '\0') return;
-  
-  for (i = 0; i < strlen(line);i++) {
-    if (line[i] == '$' && line[i+1] == '$') {
-      found = true;
-      break;
-    }
-  }
-
-  if (found == true) {
-    if (last[0] == '\0') {
-      printf("you gave me $$ and I don't know how to replace it...");
-      exit(1);
-    }
-    
-    room = strlen(last) - 2;
-    
-    for(i = strlen(line); i >= 0; i--) {
-      if (line[i] == '$') {
-        for (z = 0,j = i-1; z < strlen(last); j++,z++)
-          line[j] = last[z];
-        return;
-      } else
-        line[i+room] = line[i];  
-    }
-  } else {
-    for (i = 0; i < strlen(line);i++) {
-      if (line[i] == '.') return;
-      if (line[i] == ' ' && line[i+1] !=' ') {
-      lastSpace = i;
-      } else if (line[i] == ',' || i == strlen(line)-1){
-        y = (i - lastSpace - 1);
-        if (strlen(line)-1==i) y++;
-        for (j=0,z=lastSpace+1; j < y; z++,j++ )
-          last[j] = line[z];
-        last[j] = '\0';
-        return;
-      }
-    }
-  }
-}
-
 // preprocess the file, remove dollar signs
 FILE * preprocess(char * filename) {
   FILE *writer = NULL;
