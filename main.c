@@ -42,7 +42,7 @@ void change_dollar_sign(char * line) {
     for (i = 0; i < strlen(line);i++) {
       if (line[i] == '.') return;
       if (line[i] == ' ' && line[i+1] !=' ') {
-      lastSpace = i;
+        lastSpace = i;
       } else if (line[i] == ',' || i == strlen(line)-1){
         y = (i - lastSpace - 1);
         if (strlen(line)-1==i) y++;
@@ -65,7 +65,7 @@ FILE * preprocess(char * filename) {
   reader = fopen(filename, "r");
   writer = fopen("/tmp/temp.as","w+");
   
-	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
+  while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     trim_white_spaces(line);
     change_dollar_sign(line);
     sprintf(tmp,"%s\n",line);
@@ -81,44 +81,44 @@ FILE * preprocess(char * filename) {
 //the start point, parse arguments and call assembler
 int main(int argc, char *argv[])
 {
-	FILE *code_file = NULL;
-	FILE *obj_file = NULL;
-	FILE *ext_file = NULL;
-	FILE *entry_file = NULL;
+  FILE *code_file = NULL;
+  FILE *obj_file = NULL;
+  FILE *ext_file = NULL;
+  FILE *entry_file = NULL;
 
-	int i = 0;
-	char temp[100] = {0, };
-	int len = 0;
+  int i = 0;
+  char temp[100] = {0, };
+  int len = 0;
 	
-	if ((argc - 1) < ARGUMENTS_COUNT)
-		printf("Usage: %s file\n", argv[0]);
-	else {
-		for(i = 1; i < argc; i++) {
-			code_file = preprocess(argv[i]);
-			memccpy(temp, argv[i], '.', 100);
-			len =  strlen(temp) - 1;
-			strcpy(temp+len, ".ob");
-			obj_file = fopen(temp, "w");
-			strcpy(temp+len, ".ent");
-			entry_file = fopen(temp, "w");
-			strcpy(temp+len, ".ext");
-			ext_file = fopen(temp, "w");
-			if (NULL == code_file
-					|| NULL == obj_file
-					|| NULL == entry_file) {
-				printf("Unable to open file.\n");
-			}
-			else {
-				assembler_init();
-				assembler_proccess_file(code_file, obj_file, entry_file, ext_file);
-				assembler_destroy();
-			}
-			fclose(code_file);
-			fclose(obj_file);
-			fclose(entry_file);
-			fclose(ext_file);
-		}
-	}
+  if ((argc - 1) < ARGUMENTS_COUNT)
+    printf("Usage: %s file\n", argv[0]);
+  else {
+    for(i = 1; i < argc; i++) {
+      code_file = preprocess(argv[i]);
+      memccpy(temp, argv[i], '.', 100);
+      len =  strlen(temp) - 1;
+      strcpy(temp+len, ".ob");
+      obj_file = fopen(temp, "w");
+      strcpy(temp+len, ".ent");
+      entry_file = fopen(temp, "w");
+      strcpy(temp+len, ".ext");
+      ext_file = fopen(temp, "w");
+      if (NULL == code_file
+        || NULL == obj_file
+      || NULL == entry_file) {
+        printf("Unable to open file.\n");
+      }
+      else {
+        assembler_init();
+        assembler_proccess_file(code_file, obj_file, entry_file, ext_file);
+        assembler_destroy();
+      }
+      fclose(code_file);
+      fclose(obj_file);
+      fclose(entry_file);
+      fclose(ext_file);
+    }
+  }
 
-	return 0;
+  return 0;
 }
