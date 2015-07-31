@@ -455,12 +455,10 @@ bool commands_get_two_arguments(char *line, command_addressing *addressings, int
 	second = strtok(NULL, ",");
 
 	if(!commands_get_one_argument(token, addressings[0], &(arguments[0]), ic+1)) {
-    puts("in here1");
 		return false;
 	}
 
 	if(!commands_get_one_argument(second, addressings[1], &(arguments[1]), ic+2)) {
-    puts("in here2");
 		return false;
 	}
 
