@@ -429,9 +429,7 @@ void assembler_second_loop(char *line, FILE *obj_file, int *ic)
 	switch(arguments_type)
 	{
 		case TWO:
-      printf("1>before addressings: %d\n",addressings);
 			commands_get_two_addressings(line, addressings);
-      printf("2>before addressings: %d\n",addressings);
 			if(!commands_get_two_arguments(line, addressings, arguments, *ic)) {
 				printf("Invalid symbols\n");
 				should_compile = false;
