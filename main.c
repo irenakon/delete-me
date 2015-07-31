@@ -69,17 +69,17 @@ FILE * preprocess(char * filename) {
   char line[ASSEMBLER_LINE_SIZE];
   
   reader = fopen(filename, "r");
-  writer = fopen("/tmp/shit.as","w");
+  writer = fopen("/tmp/shit.as","w+");
   
 	while (NULL != fgets(line, ASSEMBLER_LINE_SIZE, reader)) {
     change_dollar_sign(line);
-    fputs(line,reader);
+    fputs(line,writer);
   }
   
   fclose(reader);
-  fclose(writer);
+  rewind(writer);
   
-  return fopen("/tmp/shit.as","r");
+  return writer;
 }
 
 //the start point, parse arguments and call assembler
