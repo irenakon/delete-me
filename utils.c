@@ -79,3 +79,4 @@ char * base4(char * output,long int number_to_convert) {
   output[i] = '\0';
   return output;
 }
+

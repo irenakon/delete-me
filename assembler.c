@@ -185,7 +185,7 @@ bool assembler_is_valid_data_call(char *line) {
 		for(i = 0; i < strlen(token); i++) {
 			if(('-' == token[i]) || ('+' ==  token[i])) {
 				if(0 != i) {
-					printf("+/- are not allow in the middle of a number/n");
+					printf("+/- are not allow in the middle of a number\n");
 					return false;
 				}
 				continue;
@@ -477,7 +477,7 @@ void change_dollar_sign(char * line) {
 
   if (found == true) {
     if (last[0] == '\0') {
-      printf("you gave me $$ and I don't know how to replace it...");
+      puts("you gave me $$ and I don't know how to replace it...");
       exit(1);
     }
     

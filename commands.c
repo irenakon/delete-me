@@ -391,7 +391,7 @@ int commands_get_opcode_size(command_arguments arguments_type, command_addressin
 void commands_print_opcode_to_file(FILE *file, int command, command_arguments arguments_type, command_addressing *addressings, int *arguments, int ic)
 {
 	int opcode = 0;
-
+  char buf[100];
 	opcode = opcode | (arguments_type << 10);
 	opcode = opcode | (command << 6);
 	
@@ -404,7 +404,7 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 	}
 
 	//opcode ERA for opcode is always 0
-	fprintf(file, "%02X\n", opcode);
+  fprintf(file, "%s\n", base4(buf, opcode));
 
 	if((DIRECT_REGISTER == addressings[0]) && DIRECT_REGISTER == addressings[1]) {
 		arguments[0] = arguments[0] | arguments[1];
