@@ -511,6 +511,7 @@ void change_dollar_sign(char * line) {
 //full proccess a code file, this is the assembler's "main" function
 void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, FILE *ext_file)
 {
+  char buf[100];
 	int ic = 100;
 	int dc = 0;
 
@@ -549,7 +550,7 @@ void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, 
 	fclose(data_file);
 	data_file = fopen("/tmp/data.section", "rb");	
 	while(0!=fread(&current_data,1,1,data_file)) {
-		fprintf(obj_file, "%X %03X\n", ic, current_data & 0xFFF);
+    fprintf(obj_file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (current_data & 0xFFF))));
 		ic++;
 	}
 	

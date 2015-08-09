@@ -413,7 +413,7 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 
 	if(addressings[0] != INVALID) {
 		ic++;
-		fprintf(file, "%02X %03X\n", ic, arguments[0] & 0xFFF);
+    fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (arguments[0] & 0xFFF))));
 	}
 
 	if((DIRECT_REGISTER == addressings[0]) && DIRECT_REGISTER == addressings[1]) {
@@ -422,6 +422,6 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 
 	if (addressings[1] != INVALID) {
 		ic++;
-		fprintf(file, "%02X %03X\n", ic, arguments[1] & 0xFFF);
+    fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (arguments[1] & 0xFFF))));
 	}
 }
