@@ -185,7 +185,7 @@ bool assembler_is_valid_data_call(char *line) {
 		for(i = 0; i < strlen(token); i++) {
 			if(('-' == token[i]) || ('+' ==  token[i])) {
 				if(0 != i) {
-					printf("+/- are not allow in the middle of a number\n");
+					printf("+/- are not allow in the middle of a number/n");
 					return false;
 				}
 				continue;
@@ -392,6 +392,7 @@ void assembler_second_loop(char *line, FILE *obj_file, int *ic)
 	int arguments[2]  = {-1, -1};
 	int opcode_size = -1;
 	command_arguments arguments_type = -1;
+	char buf[10] = "";
 
 	if(assembler_is_comment(line)) {
 		return;
@@ -454,7 +455,8 @@ void assembler_second_loop(char *line, FILE *obj_file, int *ic)
 	}
 
 	opcode_size = commands_get_opcode_size(arguments_type, addressings);
-	fprintf(obj_file, "%02X ", *ic);
+	//fprintf(obj_file, "%02X ", *ic);
+	fprintf(obj_file, "%04d ", atoi(base4(buf, *ic)));
 	//write opcode to file
 	commands_print_opcode_to_file(obj_file, command, arguments_type, addressings, arguments, *ic);
 	*ic += opcode_size;
@@ -477,7 +479,7 @@ void change_dollar_sign(char * line) {
 
   if (found == true) {
     if (last[0] == '\0') {
-      puts("you gave me $$ and I don't know how to replace it...");
+      printf("you gave me $$ and I don't know how to replace it...\n");
       exit(1);
     }
     
@@ -511,7 +513,6 @@ void change_dollar_sign(char * line) {
 //full proccess a code file, this is the assembler's "main" function
 void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, FILE *ext_file)
 {
-  char buf[100];
 	int ic = 100;
 	int dc = 0;
 
@@ -519,6 +520,7 @@ void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, 
 	char current_data = 0;
 	symbol_table_t *current_table = NULL;
 	symbol_table_t *containing_table = NULL;
+	char buf[10] = "";
 
 	if (NULL == code_file) {
 		printf("Error, should be given a valid file.\n");
@@ -550,7 +552,9 @@ void assembler_proccess_file(FILE *code_file, FILE *obj_file, FILE *entry_file, 
 	fclose(data_file);
 	data_file = fopen("/tmp/data.section", "rb");	
 	while(0!=fread(&current_data,1,1,data_file)) {
-    fprintf(obj_file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (current_data & 0xFFF))));
+		//fprintf(obj_file, "%X %03X\n", ic, current_data & 0xFFF);
+		fprintf(obj_file, "%04d %06d\n", atoi(base4(buf, ic)), 
+						atoi(base4(buf, (current_data & 0xFFF))));
 		ic++;
 	}
 	
