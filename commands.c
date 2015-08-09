@@ -391,7 +391,8 @@ int commands_get_opcode_size(command_arguments arguments_type, command_addressin
 void commands_print_opcode_to_file(FILE *file, int command, command_arguments arguments_type, command_addressing *addressings, int *arguments, int ic)
 {
 	int opcode = 0;
-  char buf[100];
+	char buf[10] = "";
+
 	opcode = opcode | (arguments_type << 10);
 	opcode = opcode | (command << 6);
 	
@@ -404,7 +405,7 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 	}
 
 	//opcode ERA for opcode is always 0
-  fprintf(file, "%s\n", base4(buf, opcode));
+	fprintf(file, "%06d\n", atoi(base4(buf, opcode)));
 
 	if((DIRECT_REGISTER == addressings[0]) && DIRECT_REGISTER == addressings[1]) {
 		arguments[0] = arguments[0] | arguments[1];
@@ -413,7 +414,8 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 
 	if(addressings[0] != INVALID) {
 		ic++;
-    fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (arguments[0] & 0xFFF))));
+		fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)), 
+						atoi(base4(buf, (arguments[0] & 0xFFF))));
 	}
 
 	if((DIRECT_REGISTER == addressings[0]) && DIRECT_REGISTER == addressings[1]) {
@@ -422,6 +424,7 @@ void commands_print_opcode_to_file(FILE *file, int command, command_arguments ar
 
 	if (addressings[1] != INVALID) {
 		ic++;
-    fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)),atoi(base4(buf, (arguments[1] & 0xFFF))));
+		fprintf(file, "%04d %06d\n", atoi(base4(buf, ic)), 
+					atoi(base4(buf, (arguments[1] & 0xFFF))));
 	}
 }
